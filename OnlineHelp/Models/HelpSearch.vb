@@ -1,22 +1,12 @@
-﻿Imports Microsoft.Azure.Search
-Imports pbs.Helper
-Imports pbs.Helper.Interfaces
+﻿Imports System.Threading.Tasks
+Imports Microsoft.Azure.Search
+Imports SPC
+Imports SPC.Interfaces
 
 Public Class HelpSearch
     Implements IRunable
 
-    Private ReadOnly Property Notes As String Implements IRunable.Notes
-        Get
-            Return <syntax>pbs.BO.Azure.HelpSearch?searchfor=something.
-                Search help with Azure search engine.
-                   </syntax>.Value.RemoveDoubleSpaces
-        End Get
-    End Property
 
-    Private Sub Run(args As pbsCmdArgs) Implements IRunable.Run
-        Dim topic = args.GetDefaultParameter
-
-    End Sub
 
     Shared Function SearchForTopic(Topic As String, ByRef NextLink As Models.SearchContinuationToken) As List(Of HelpTopicInfo)
 
@@ -50,7 +40,7 @@ Public Class HelpSearch
 
             For Each ret In results.Results
 
-                If ret.Score > 0.1 Then
+                If ret.Score > 0.05 Then
                     Dim doc = HelpTopicInfo.BuildHelpTopicInfo(ret.Document)
                     doc.SearchScore = ret.Score
 
@@ -62,6 +52,10 @@ Public Class HelpSearch
         End If
 
         Return docs
+    End Function
+
+    Public Function RunAsync(args As CmdArg) As Task Implements IRunable.RunAsync
+        Dim topic = args.GetDefaultParameter
     End Function
 
     'Private Shared Function SearchHtml(Topic As String) As List(Of HelpTopicInfo)

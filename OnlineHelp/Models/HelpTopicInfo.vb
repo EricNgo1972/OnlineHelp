@@ -1,4 +1,4 @@
-﻿Imports pbs.Helper
+﻿Imports SPC.Helper.Extension
 
 Public Class HelpTopicInfo
 
@@ -18,7 +18,7 @@ Public Class HelpTopicInfo
             Return _content
         End Get
         Set(value As String)
-            value = pbs.Helper.Nz(value, String.Empty)
+            value = Str.Nz(value, String.Empty)
             _content = value.Replace("\n", Environment.NewLine)
             _content = _content.Replace("\t", vbTab)
             _content = _content.Shorten(500)
@@ -34,7 +34,7 @@ Public Class HelpTopicInfo
             'Return String.Format("{0}/{1}.html", _helpRoot, Name.ShortFileName)
         End Get
         Set(value As String)
-            _link = pbs.Helper.Nz(value, String.Empty)
+            _link = Str.Nz(value, String.Empty)
         End Set
     End Property
 
@@ -44,15 +44,15 @@ Public Class HelpTopicInfo
         Dim atopic = New HelpTopicInfo
         Try
 
-            atopic.Author = DNz(search("metadata_author"), String.Empty)
+            atopic.Author = Str.DNz(search("metadata_author"), String.Empty)
             'atopic.UpdatedTime = DNz(search("metadata_storage_last_modified"), String.Empty)
-            atopic.Name = DNz(search("metadata_storage_name"), String.Empty)
+            atopic.Name = Str.DNz(search("metadata_storage_name"), String.Empty)
 
-            atopic.Content = DNz(search("content"), String.Empty)
+            atopic.Content = Str.DNz(search("content"), String.Empty)
 
-            atopic.Size = DNz(search("metadata_storage_size"), String.Empty)
+            atopic.Size = Str.DNz(search("metadata_storage_size"), String.Empty)
 
-            Dim theParth = DNz(search("metadata_storage_path"), String.Empty)
+            Dim theParth = Str.DNz(search("metadata_storage_path"), String.Empty)
 
             Dim base64 = HttpServerUtility.UrlTokenDecode(theParth) 'Convert.FromBase64String(theParth)
 

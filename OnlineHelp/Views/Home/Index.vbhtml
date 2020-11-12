@@ -38,7 +38,7 @@ End Using
                                 <div class="col-sm-9">
                                     <div class="alert alert-dismissible alert-warning" Score: @doc.SearchScore>
                                         <b><a href="@doc.Link" target="_blank">@doc.Name</a></b>
-                                        Size:  @pbs.Helper.BytesToString(doc.Size). Updated: @doc.UpdatedTime by @doc.Author
+                                        Size:  @String.Format("{0:#,###}", doc.Size). Updated: @doc.UpdatedTime by @doc.Author
                                     </div>
                                 </div>
                                 <div Class="col-sm-3">
