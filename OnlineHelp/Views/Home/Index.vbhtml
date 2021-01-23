@@ -17,8 +17,10 @@ End Code
         <div Class="col-sm-8">@Html.TextBox("SearchFor", topic, New With {.class = "form-control", .style = "max-width: 100%;"})</div>
         <div Class="col-sm-2"><input type="submit" , value="Search" class="btn btn-primary"></div>
     </div>
+    
     <div Class="row">
         <div Class="col-sm-12">
+            <hr />
 
             @If results IsNot Nothing Then
                 @Html.Label(String.Format("Found {0:0} documents", results.Count), New With {.class = "alert alert-dismissible alert-light", .style = "max-width: 100%;"})
@@ -29,6 +31,7 @@ End Code
 End Using
 
         <div Name = "SearchResults" Class="container">
+
     @If results IsNot Nothing Then
 
         For Each doc In results
@@ -36,13 +39,13 @@ End Using
 
                             <div Class="row">
                                 <div class="col-sm-9">
-                                    <div class="alert alert-dismissible alert-warning" Score: @doc.SearchScore>
+                                    <div class="alert alert-dismissible alert-success">
                                         <b><a href="@doc.Link" target="_blank">@doc.Name</a></b>
                                         Size:  @String.Format("{0:#,###}", doc.Size). Updated: @doc.UpdatedTime by @doc.Author
                                     </div>
                                 </div>
                                 <div Class="col-sm-3">
-                                    <div class="alert alert-dismissible alert-warning">Score: @doc.SearchScore</div>
+                                    <div class="alert alert-dismissible alert-info text-sm-right">Score: @String.Format("{0:00}", doc.SearchScore * 100)</div>
                                 </div>
                             </div>
                             <div class="row">

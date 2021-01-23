@@ -1,4 +1,5 @@
-﻿Imports Microsoft.Azure.Search
+﻿Imports System.Threading.Tasks
+Imports Microsoft.Azure.Search
 
 Public Class HomeController
     Inherits System.Web.Mvc.Controller
@@ -7,10 +8,10 @@ Public Class HomeController
     '    Return View()
     'End Function
 
-    Function Index(SearchFor As String)
+    Function Index(SearchFor As String) As ViewResult
 
         Dim NextLink As Models.SearchContinuationToken = Nothing
-        Dim searchResults = HelpSearch.SearchForTopic(SearchFor, NextLink)
+        Dim searchResults = New HelpSearch().SearchForTopic(SearchFor, NextLink)
 
         ViewBag.SearchFor = SearchFor
         ViewBag.NextLink = NextLink

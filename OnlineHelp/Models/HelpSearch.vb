@@ -8,22 +8,15 @@ Public Class HelpSearch
 
 
 
-    Shared Function SearchForTopic(Topic As String, ByRef NextLink As Models.SearchContinuationToken) As List(Of HelpTopicInfo)
-
+    Function SearchForTopic(Topic As String, NextLink As Models.SearchContinuationToken) As List(Of HelpTopicInfo)
 
         Dim docs = SearchDocs(Topic, NextLink)
-
-        'Dim htmls = SearchHtml(Topic)
-
-        'For Each itm In htmls
-        '    docs.Add(itm)
-        'Next
 
         Return (From doc In docs Order By doc.SearchScore Descending, doc.UpdatedTime Descending).ToList
 
     End Function
 
-    Private Shared Function SearchDocs(Topic As String, ByRef NextLink As Models.SearchContinuationToken) As List(Of HelpTopicInfo)
+    Private Function SearchDocs(Topic As String, NextLink As Models.SearchContinuationToken) As List(Of HelpTopicInfo)
 
         Dim sic = New SearchIndexClient(SearchCloudKey.GetKey, "azureblob-index", New SearchCredentials(SearchCloudKey.GetValue))
 
